@@ -4,23 +4,25 @@
     <listeners>
         <listener class-name="org.testng.reporters.EmailableReporter"/>
     </listeners>
-    <!--
+
         <test thread-count="1" name="Search_Tests">
             <classes>
                 <class name="Tests.SearchTests"/>
             </classes>
         </test>
-        -->
-         <test thread-count="1" name="Login_Tests">
-             <classes>
-                 <class name="Tests.LoginTests"/>
-             </classes>
-         </test>
+
     <!--
-        <test thread-count="1" name="Register_Tests">
-            <classes>
-                <class name="Tests.RegisterTests"/>
-            </classes>
-        </test>
+            <test thread-count="1" name="Login_Tests">
+                <classes>
+                    <class name="Tests.LoginTests"/>
+                </classes>
+            </test>
     -->
+       <!--
+           <test thread-count="1" name="Register_Tests">
+               <classes>
+                   <class name="Tests.RegisterTests"/>
+               </classes>
+           </test>
+       -->
  </suite> <!-- Default Suite -->
