@@ -1,0 +1,11 @@
+BROWSER: Chrome
+BASE_URL: https://www.trendyol.com
+TEST_OUTPUT_DIRECTORY: test-output
+FIREFOX_BINARY_PATH: C:\\Program Files\\Mozilla Firefox\\firefox.exe
+ELEMENT_VISIBLE_TIMEOUT: 10000
+ELEMENT_VISIBLE_POLLING: 1000
+
+TESTING_USERNAME: yusufalti333@gmail.com
+TESTING_PASSWORD: TestDeneme1234.
+REGISTER_TESTING_USERNAME: developmenthiring.test124@outlook.com
+REGISTER_TESTING_MAIL_PASSWORD: TesttseT1234.
