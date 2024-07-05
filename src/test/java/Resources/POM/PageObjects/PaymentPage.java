@@ -62,6 +62,10 @@ public class PaymentPage {
         commonMethods.clickElement(pay);
     }
 
+    public boolean verifyPayButtonIsDisabled(){
+        return !commonMethods.waitUntilElementIsVisibleAndClickable(pay);
+    }
+
     public boolean verifyWarningIsShown(){
         try{
             commonMethods.waitUntilElementIsVisible(warning);

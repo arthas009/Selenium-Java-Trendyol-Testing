@@ -14,6 +14,8 @@ public class SearchPage {
     WebDriver driver;
     CommonMethods commonMethods;
     By randomProduct = By.xpath("//div[@class = 'p-card-wrppr with-campaign-view']/div[1]");
+    By randomProduct2 = By.xpath("//div[@class = 'p-card-wrppr with-campaign-view'][2]/div[1]");
+
     By productCenterWrapper = By.xpath("//div[@class = 'search-app-container']");
     By minPriceInput = By.xpath("//input[@class = 'fltr-srch-prc-rng-input min']");
     By maxPriceInput = By.xpath("//input[@class = 'fltr-srch-prc-rng-input max']");
@@ -112,6 +114,8 @@ public class SearchPage {
     public void clickOnRandomProduct() {
         commonMethods.clickElement(randomProduct);
     }
+
+    public void clickOnRandomProduct2() { commonMethods.clickElement(randomProduct2); }
 
     /**
      * waitUntilSearchMainContainerLoaded

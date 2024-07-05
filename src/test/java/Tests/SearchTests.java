@@ -114,4 +114,42 @@ public class SearchTests extends BaseClass {
         Assert.assertTrue(basketPage.verifyBrandNameWithGiven("Philips"));
     }
 
+    @Test(priority = 2,
+            groups = "Tests.SearchTests",
+            description = "Searchs a random product and add first two of them to basket page." +
+                    "Verifies 2 products is added to basket page.")
+    public void Verify_MultipleProduct() {
+        pageHeader.searchSomethingInSearchbar("Süpürge");
+        searchPage.clickOnRandomProduct();
+        searchPage.switchToProductPage();
+        productPage.clickOnAddToBasket();
+        productPage.waitUntilAddedToBasketSuccessButtonIsVisible();
+        productPage.closeProductBrowserTab();
+        searchPage.clickOnRandomProduct2();
+        searchPage.switchToProductPage();
+        productPage.clickOnAddToBasket();
+        productPage.waitUntilAddedToBasketSuccessButtonIsVisible();
+        productPage.closeProductBrowserTab();
+        pageHeader.goToMyBasketPage();
+        Assert.assertTrue(basketPage.verifyBasketHasMultipleItems());
+    }
+
+    @Test(priority = 2,
+            groups = "Tests.SearchTests",
+            description = "Adds a product to basket and increased the count of product." +
+                    "Verifies price count is doubled when there is 2 same product.")
+    public void Verify_IncreaseProductCountAtBasketPage() {
+        pageHeader.searchSomethingInSearchbar("Süpürge");
+        searchPage.clickOnRandomProduct();
+        searchPage.switchToProductPage();
+        productPage.clickOnAddToBasket();
+        productPage.waitUntilAddedToBasketSuccessButtonIsVisible();
+        productPage.closeProductBrowserTab();
+        pageHeader.goToMyBasketPage();
+        int currentPrice = basketPage.getPrice();
+        basketPage.clickOnIncreaseProductCounter();
+        int newPrice = basketPage.getPrice();
+        Assert.assertEquals(currentPrice * 2, newPrice);
+    }
+
 }
