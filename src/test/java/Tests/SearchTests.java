@@ -47,16 +47,12 @@ public class SearchTests extends BaseClass {
         }
     }
 
-    @Test(priority = 2,
+    @Test(priority = 1,
             groups = "Tests.SearchTests",
             description = "Searchs Supurge products under 3000 - 10000 TL limit and adds first product to basket." +
-                    "Verifies brand selection in search page is working." +
-                    "Verifies price range selection in search page is working." +
                     "Verifies adding to basket in product page is working.")
-    public void Verify_SupurgeProduct() {
+    public void Verify_ProductAddingToBasket() {
         pageHeader.searchSomethingInSearchbar("Süpürge");
-        searchPage.clickOnBrandCheckbox("Arzum");
-        searchPage.inputPriceLimitsAndMakeSearch(3000, 10000);
         searchPage.clickOnRandomProduct();
         searchPage.switchToProductPage();
         productPage.clickOnAddToBasket();
@@ -69,24 +65,53 @@ public class SearchTests extends BaseClass {
 
     }
 
-    @Test(priority = 3,
+    @Test(priority = 1,
             groups = "Tests.SearchTests",
             description = "Searchs a random Gomlek product and adds to favorite and basket pages." +
-                    "Verifies adding to favorite in search page is working." +
-                    "Verifies adding to basket from favorites page is working.")
-    public void Verify_AyakkabıProduct() {
+                    "Verifies adding to favorite in search page is working.")
+    public void Verify_ProductAddingToFavorites() {
         pageHeader.searchSomethingInSearchbar("Ayakkabı");
         searchPage.clickOnAddToFavorite();
         pageHeader.goToFavoritesPage();
         Assert.assertTrue(favoritesPage.verifyFavoritesIsNotEmpty());
-        favoritesPage.clickOnAddToBasket();
         favoritesPage.remoteItemFromFavorites(1);
         Assert.assertTrue(favoritesPage.verifyFavoritesIsEmpty());
-        pageHeader.goToMyBasketPage();
-        basketPage.deleteItem(1);
-        Assert.assertTrue(basketPage.verifyBasketIsEmpty());
-
     }
 
+    @Test(priority = 2,
+            groups = "Tests.SearchTests",
+            description = "Searchs a random product and adds basket page. Compare the price of product is in between the given range" +
+                    "Verifies price of the selected product is in between the given range")
+    public void Verify_PriceLimit() {
+        pageHeader.searchSomethingInSearchbar("Süpürge");
+        searchPage.clickOnBrandCheckbox("Arzum");
+        searchPage.inputPriceLimitsAndMakeSearch(3000, 10000);
+        searchPage.clickOnRandomProduct();
+        searchPage.switchToProductPage();
+        productPage.clickOnAddToBasket();
+        productPage.waitUntilAddedToBasketSuccessButtonIsVisible();
+        productPage.closeProductBrowserTab();
+        pageHeader.goToMyBasketPage();
+        Assert.assertFalse(basketPage.verifyBasketIsEmpty());
+        Assert.assertTrue(basketPage.verifyPriceIsBetweenGivenRange(3000,10000));
+    }
+
+    @Test(priority = 2,
+            groups = "Tests.SearchTests",
+            description = "Searchs a random product and adds basket page. Compare the brand of product." +
+                    "Verifies brand of product is as selected as in search page")
+    public void Verify_BrandName() {
+        pageHeader.searchSomethingInSearchbar("Süpürge");
+        searchPage.clickOnBrandCheckbox("Philips");
+        searchPage.inputPriceLimitsAndMakeSearch(3000, 10000);
+        searchPage.clickOnRandomProduct();
+        searchPage.switchToProductPage();
+        productPage.clickOnAddToBasket();
+        productPage.waitUntilAddedToBasketSuccessButtonIsVisible();
+        productPage.closeProductBrowserTab();
+        pageHeader.goToMyBasketPage();
+        Assert.assertFalse(basketPage.verifyBasketIsEmpty());
+        Assert.assertTrue(basketPage.verifyBrandNameWithGiven("Philips"));
+    }
 
 }

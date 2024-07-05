@@ -43,18 +43,6 @@ public class SearchPage {
     }
 
     /**
-     * verifyCheckboxFilterIsShown
-     * Verifies filter is shown in search page
-     *
-     * @param filterName filter name to check
-     * @return boolean result of verification
-     */
-    public boolean verifyCheckboxFilterIsShown(String filterName) {
-        By filter = By.xpath("//div[@class = 'slctd-fltr-item']/span[text() = '" + filterName + "']");
-        return commonMethods.waitUntilElementIsVisibleAndClickable(filter);
-    }
-
-    /**
      * clickOnPrices
      * Clicks on prices menu to open price range options in search page
      */

@@ -12,6 +12,13 @@ public class BasketPage {
 
     CommonMethods commonMethods;
 
+    By approveBasket = By.xpath("//a[text() = 'Sepeti Onayla']");
+    By skipTrendyolPass = By.xpath("//button[text() = 'Eklemeden Devam Et'");
+    By productPrice = By.xpath("//div[@class = 'class=pb-basket-item-price'");
+
+    By brandNameElement = By.xpath("//p[@class = 'pb-item']//span");
+
+
     /**
      * Constructor of BasketPage
      *
@@ -47,6 +54,26 @@ public class BasketPage {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public void approveBasket(){
+        commonMethods.clickElement(approveBasket);
+    }
+
+    public void skipTrendyolPass(){
+        commonMethods.clickElement(skipTrendyolPass);
+
+    }
+
+    public boolean verifyPriceIsBetweenGivenRange(int priceMin, int priceHigh){
+        commonMethods.waitUntilElementIsVisible(productPrice);
+        int price = Integer.parseInt(commonMethods.getElementText((productPrice)));
+        return price >= priceMin && price <= priceHigh;
+    }
+
+    public boolean verifyBrandNameWithGiven(String brandName){
+        commonMethods.waitUntilElementIsVisible(brandNameElement);
+        return brandName.equals(commonMethods.getElementText(brandNameElement));
     }
 
 }

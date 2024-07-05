@@ -6,6 +6,7 @@ import Resources.Utility.CustomWait.CustomWait;
 import org.checkerframework.checker.units.qual.C;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 
 import java.awt.*;
 import java.util.List;
@@ -13,7 +14,6 @@ import java.util.List;
 public class CommonMethods implements IElementInteractions {
     private final PageHeader pageHeader;
     private final CustomWait customWait;
-
     private final WebDriver driver;
     String originalHandle;
 
@@ -72,6 +72,13 @@ public class CommonMethods implements IElementInteractions {
     public String getElementText(By element) {
         WebElement webElement = driver.findElement(element);
         return webElement.getText();
+    }
+
+    public void selectFromList(By element, String text){
+        waitUntilElementIsVisibleAndClickable(element);
+        Select dropdown = new Select(driver.findElement(element));
+        dropdown.selectByVisibleText(text);
+
     }
 
     public void clickBody() {
