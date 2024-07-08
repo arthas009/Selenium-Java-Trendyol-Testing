@@ -14,7 +14,7 @@ public class PaymentPage {
     By saveAndContinue = By.xpath("//button[text() = 'Kaydet ve Devam Et']");
     By approveAgreement = By.xpath("//label[@class = 'p-checkbox-wrapper']");
     By warning = By.xpath("//span[text() = 'Lütfen belirtilen alanları kontrol ediniz.']");
-    By pay = By.xpath("//button[@class = 'ty-primary-btn ty-btn-large ty-disabled-secondary' and text = 'Ödeme Yap']");
+    By pay = By.xpath("//button[@class = 'ty-primary-btn ty-btn-large ty-disabled-secondary' and text() = 'Ödeme Yap']");
     By cardNumber = By.id("card-number");
     By month = By.id("card-date-month");
     By year = By.id("card-date-year");
@@ -60,6 +60,11 @@ public class PaymentPage {
 
     public void clickOnPayButton(){
         commonMethods.clickElement(pay);
+    }
+
+    public void clickOnHirePurchaseOption(String option){
+        By hirePurchaseOption = By.id("//label[text() = '"+option+"']");
+        commonMethods.clickElement(hirePurchaseOption);
     }
 
     public boolean verifyPayButtonIsDisabled(){

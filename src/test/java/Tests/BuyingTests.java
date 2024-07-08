@@ -79,6 +79,7 @@ public class BuyingTests extends BaseClass {
         paymentPage.verifyAddressInformationIsShown();
         paymentPage.verifyPaymentInformationIsShown();
         paymentPage.saveAndContinue();
+        paymentPage.approveAgreement();
         paymentPage.inputCardNumber("1234431213451234");
         paymentPage.selectMonth("12");
         paymentPage.selectYear("2027");
@@ -86,7 +87,7 @@ public class BuyingTests extends BaseClass {
         Assert.assertTrue(paymentPage.verifyPayButtonIsDisabled());
     }
 
-    @Test(priority = 2,
+    @Test(priority = 1,
             groups = "Tests.BuyingTests",
             description = "Goes to basked page, approves basket and tries to buy the product using invalid card month" +
                     "Verifies invalid card month triggers a warning text." +
@@ -98,6 +99,7 @@ public class BuyingTests extends BaseClass {
         paymentPage.verifyAddressInformationIsShown();
         paymentPage.verifyPaymentInformationIsShown();
         paymentPage.saveAndContinue();
+        paymentPage.approveAgreement();
         paymentPage.inputCardNumber("1234431213451234");
         paymentPage.selectMonth("1");
         paymentPage.selectYear("2027");
@@ -107,7 +109,7 @@ public class BuyingTests extends BaseClass {
 
     }
 
-    @Test(priority = 2,
+    @Test(priority = 1,
             groups = "Tests.BuyingTests",
             description = "Goes to basked page, approves basket and tries to buy the product using invalid card yeara" +
                     "Verifies invalid card year triggers a warning text." +
@@ -119,6 +121,7 @@ public class BuyingTests extends BaseClass {
         paymentPage.verifyAddressInformationIsShown();
         paymentPage.verifyPaymentInformationIsShown();
         paymentPage.saveAndContinue();
+        paymentPage.approveAgreement();
         paymentPage.inputCardNumber("1234431213451234");
         paymentPage.selectMonth("6");
         paymentPage.selectYear("2032");
@@ -128,7 +131,7 @@ public class BuyingTests extends BaseClass {
 
     }
 
-    @Test(priority = 2,
+    @Test(priority = 1,
             groups = "Tests.BuyingTests",
             description = "Assume 999 is an invalid CVV number." +
                     "Goes to basked page, approves basket and tries to buy the product using invalid card cvv" +
@@ -141,6 +144,7 @@ public class BuyingTests extends BaseClass {
         paymentPage.verifyAddressInformationIsShown();
         paymentPage.verifyPaymentInformationIsShown();
         paymentPage.saveAndContinue();
+        paymentPage.approveAgreement();
         paymentPage.inputCardNumber("1234431213451234");
         paymentPage.selectMonth("1");
         paymentPage.selectYear("2027");
@@ -150,7 +154,7 @@ public class BuyingTests extends BaseClass {
 
     }
 
-    @Test(priority = 2,
+    @Test(priority = 1,
             groups = "Tests.BuyingTests",
             description = "Goes to basked page, approves basket and tries to buy the product using long (more than 3 digit) card cvv" +
                     "Verifies invalid card cvv triggers a warning text." +
@@ -162,6 +166,7 @@ public class BuyingTests extends BaseClass {
         paymentPage.verifyAddressInformationIsShown();
         paymentPage.verifyPaymentInformationIsShown();
         paymentPage.saveAndContinue();
+        paymentPage.approveAgreement();
         paymentPage.inputCardNumber("1234431213451234");
         paymentPage.selectMonth("1");
         paymentPage.selectYear("2027");
@@ -170,8 +175,26 @@ public class BuyingTests extends BaseClass {
         Assert.assertTrue(paymentPage.verifyPayButtonIsDisabled());
 
     }
+    @Test(priority = 1,
+            groups = "Tests.BuyingTests",
+            description = "In this case we assume this is a valid scenario with valid card number credentials. User does not click" +
+                    "Approve Agreement button" +
+                    "Verifies the pay button is disabled when the user did not click Approve Agreement button")
+    public void Verify_UnsuccessfulBuying_UnapprovedAgreement() {
+        Assert.assertFalse(basketPage.verifyBasketIsEmpty());
+        basketPage.approveBasket();
+        basketPage.skipTrendyolPass();
+        paymentPage.verifyAddressInformationIsShown();
+        paymentPage.verifyPaymentInformationIsShown();
+        paymentPage.saveAndContinue();
+        paymentPage.inputCardNumber("1234431213451234");
+        paymentPage.selectMonth("1");
+        paymentPage.selectYear("2028");
+        paymentPage.inputCvv("125");
+        Assert.assertTrue(paymentPage.verifyPayButtonIsDisabled());
+    }
 
-    @Test(priority = 3,
+    @Test(priority = 1,
             groups = "Tests.BuyingTests",
             description = "In this case we assume this is a valid scenario with valid card number credentials." +
                     "I could not use a real card number for the case so do not care about the card values," +
@@ -183,12 +206,37 @@ public class BuyingTests extends BaseClass {
         paymentPage.verifyAddressInformationIsShown();
         paymentPage.verifyPaymentInformationIsShown();
         paymentPage.saveAndContinue();
+        paymentPage.approveAgreement();
         paymentPage.inputCardNumber("1234431213451234");
         paymentPage.selectMonth("1");
         paymentPage.selectYear("2028");
         paymentPage.inputCvv("125");
         Assert.assertFalse(paymentPage.verifyWarningIsShown());
         Assert.assertFalse(paymentPage.verifyPayButtonIsDisabled());
+        paymentPage.clickOnPayButton();
     }
 
+    @Test(priority = 1,
+            groups = "Tests.BuyingTests",
+            description = "In this case we assume this is a valid scenario with valid card number credentials." +
+                    "I could not use a real card number for the case so do not care about the card values," +
+                    "just assume they are correct." +
+                    "Verifies buying option with hire purchase is working")
+    public void Verify_SuccessfulBuying_HirePurchase() {
+        Assert.assertFalse(basketPage.verifyBasketIsEmpty());
+        basketPage.approveBasket();
+        basketPage.skipTrendyolPass();
+        paymentPage.verifyAddressInformationIsShown();
+        paymentPage.verifyPaymentInformationIsShown();
+        paymentPage.saveAndContinue();
+        paymentPage.approveAgreement();
+        paymentPage.inputCardNumber("1234431213451234");
+        paymentPage.selectMonth("1");
+        paymentPage.selectYear("2028");
+        paymentPage.inputCvv("125");
+        paymentPage.clickOnHirePurchaseOption("3 Taksit");
+        Assert.assertFalse(paymentPage.verifyWarningIsShown());
+        Assert.assertFalse(paymentPage.verifyPayButtonIsDisabled());
+        paymentPage.clickOnPayButton();
+    }
 }
